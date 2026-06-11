@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nishaanth K N — AI Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #0A0F1E;
+      --slate:   #1A2340;
+      --slate2:  #232D4A;
+      --teal:    #00D4AA;
+      --teal-dim:#007A62;
+      --white:   #E8EDF5;
+      --gray:    #8A95B0;
+      --gray2:   #4A556A;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(10,15,30,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,212,170,0.1);
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 1.1rem;
+      color: var(--teal); letter-spacing: 0.04em;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--gray); text-decoration: none;
+      font-size: 0.88rem; font-weight: 500; letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--teal); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 0 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-grid-bg {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(0,212,170,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,170,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black, transparent);
+    }
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem; color: var(--teal);
+      letter-spacing: 0.12em; margin-bottom: 1.2rem;
+    }
+    .hero-eyebrow::before { content: '> '; opacity: 0.6; }
+    .hero-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(3.2rem, 7vw, 6.5rem);
+      font-weight: 700; line-height: 1.0;
+      color: var(--white); margin-bottom: 1rem;
+    }
+    .hero-name span { color: var(--teal); }
+    .hero-tagline {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      color: var(--gray); margin-bottom: 2.5rem;
+      min-height: 2rem;
+    }
+    .cursor {
+      display: inline-block; width: 2px; height: 1.2em;
+      background: var(--teal); vertical-align: middle;
+      margin-left: 2px; animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .hero-sub {
+      max-width: 520px; color: var(--gray);
+      font-size: 1rem; line-height: 1.75; margin-bottom: 3rem;
+    }
+    .hero-ctas { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--teal); color: var(--navy);
+      padding: 0.75rem 1.8rem; border-radius: 4px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600; font-size: 0.9rem; letter-spacing: 0.03em;
+      text-decoration: none; transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-outline {
+      border: 1px solid var(--teal-dim); color: var(--teal);
+      padding: 0.75rem 1.8rem; border-radius: 4px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500; font-size: 0.9rem; letter-spacing: 0.03em;
+      text-decoration: none; transition: background 0.2s;
+    }
+    .btn-outline:hover { background: rgba(0,212,170,0.07); }
+
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+      color: var(--gray2); font-size: 0.75rem; letter-spacing: 0.08em;
+      animation: float 2.5s ease-in-out infinite;
+    }
+    .scroll-hint::after {
+      content: ''; display: block; width: 1px; height: 36px;
+      background: linear-gradient(var(--teal-dim), transparent);
+    }
+    @keyframes float {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50%      { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 7rem 4rem; }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem; color: var(--teal);
+      letter-spacing: 0.14em; text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 700; color: var(--white); margin-bottom: 3.5rem;
+    }
+    .teal-bar {
+      display: inline-block; width: 40px; height: 3px;
+      background: var(--teal); margin-right: 0.8rem;
+      vertical-align: middle; border-radius: 2px;
+    }
+
+    /* ── ABOUT ── */
+    #about { border-top: 1px solid var(--slate2); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+      align-items: start; max-width: 1000px;
+    }
+    .about-text p { color: var(--gray); line-height: 1.85; margin-bottom: 1.2rem; font-size: 0.97rem; }
+    .about-text p strong { color: var(--white); font-weight: 500; }
+    .skills-grid { display: flex; flex-direction: column; gap: 1rem; }
+    .skill-row { display: flex; flex-direction: column; gap: 0.35rem; }
+    .skill-meta {
+      display: flex; justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem; color: var(--gray);
+    }
+    .skill-bar {
+      height: 3px; background: var(--slate2); border-radius: 2px; overflow: hidden;
+    }
+    .skill-bar-fill {
+      height: 100%; background: var(--teal); border-radius: 2px;
+      transform-origin: left; animation: grow 1.2s ease forwards;
+      transform: scaleX(0);
+    }
+    @keyframes grow { to { transform: scaleX(1); } }
+
+    /* ── EXPERIENCE ── */
+    #experience { border-top: 1px solid var(--slate2); }
+    .timeline { max-width: 720px; }
+    .timeline-item {
+      display: grid; grid-template-columns: 120px 1fr;
+      gap: 2rem; padding: 2.2rem 0;
+      border-bottom: 1px solid var(--slate2);
+      position: relative;
+    }
+    .timeline-item:last-child { border-bottom: none; }
+    .timeline-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem; color: var(--teal-dim);
+      padding-top: 0.2rem; line-height: 1.5;
+    }
+    .timeline-role {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600; font-size: 1.05rem; color: var(--white);
+      margin-bottom: 0.25rem;
+    }
+    .timeline-company {
+      font-size: 0.85rem; color: var(--teal); margin-bottom: 0.85rem;
+    }
+    .timeline-desc {
+      font-size: 0.9rem; color: var(--gray); line-height: 1.75;
+    }
+    .timeline-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.9rem; }
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; color: var(--teal);
+      border: 1px solid var(--teal-dim); border-radius: 3px;
+      padding: 0.22rem 0.6rem; letter-spacing: 0.02em;
+    }
+
+    /* ── PROJECTS ── */
+    #projects { border-top: 1px solid var(--slate2); }
+    .projects-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: var(--slate); border: 1px solid var(--slate2);
+      border-radius: 8px; padding: 2rem;
+      transition: border-color 0.25s, transform 0.2s;
+      cursor: default; position: relative; overflow: hidden;
+    }
+    .project-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 2px; background: var(--teal);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .project-card:hover { border-color: var(--teal-dim); transform: translateY(-3px); }
+    .project-card:hover::before { transform: scaleX(1); }
+    .project-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; color: var(--gray2); margin-bottom: 0.9rem;
+    }
+    .project-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600; font-size: 1.1rem; color: var(--white);
+      margin-bottom: 0.75rem;
+    }
+    .project-desc { font-size: 0.88rem; color: var(--gray); line-height: 1.75; margin-bottom: 1.2rem; }
+    .project-stack { display: flex; gap: 0.45rem; flex-wrap: wrap; }
+    .stack-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; background: var(--slate2);
+      color: var(--gray); border-radius: 3px;
+      padding: 0.2rem 0.55rem;
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      border-top: 1px solid var(--slate2);
+      text-align: center; padding: 8rem 4rem;
+    }
+    #contact .section-title { margin-bottom: 1rem; }
+    .contact-sub { color: var(--gray); margin-bottom: 3rem; max-width: 440px; margin-left: auto; margin-right: auto; }
+    .contact-links { display: flex; justify-content: center; gap: 1.8rem; flex-wrap: wrap; }
+    .contact-link {
+      display: flex; align-items: center; gap: 0.5rem;
+      color: var(--gray); text-decoration: none; font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .contact-link:hover { color: var(--teal); }
+    .contact-link svg { width: 18px; height: 18px; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--slate2);
+      text-align: center; padding: 2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.73rem; color: var(--gray2);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      #hero, section { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .timeline-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .skill-bar-fill { animation: none; transform: scaleX(1); }
+      .scroll-hint { animation: none; }
+      * { transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">NKN</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-eyebrow">AI Engineer · Bengaluru, IN</div>
+  <h1 class="hero-name">Nishaanth<br /><span>K N</span></h1>
+  <div class="hero-tagline" id="typed-text"><span class="cursor"></span></div>
+  <p class="hero-sub">
+    I build AI systems that reason and predict in production — not just in notebooks.
+    LLMs, RAG pipelines, real-time data, and the infrastructure that keeps them honest.
+  </p>
+  <div class="hero-ctas">
+    <a href="#projects" class="btn-primary">View Projects</a>
+    <a href="#contact" class="btn-outline">Get in touch</a>
+  </div>
+  <div class="scroll-hint">scroll</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">// 01 — about</div>
+  <h2 class="section-title"><span class="teal-bar"></span>Who I am</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        Computer Science graduate from <strong>Amrita Vishwa Vidyapeetham</strong>, now a
+        Software Engineer at <strong>Tarka Labs, Bengaluru</strong>. Previously a
+        Data & AI Engineer at Bosch Global Software Technologies.
+      </p>
+      <p>
+        My focus sits at the intersection of <strong>LLMs, real-time data pipelines,
+        and cloud infrastructure</strong>. I care about systems that handle edge cases
+        gracefully, not just happy paths.
+      </p>
+      <p>
+        Outside work: solo travel (Singapore, Vietnam), long-form blogging,
+        and six days a week in the gym.
+      </p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-row">
+        <div class="skill-meta"><span>Python / ML</span><span>95%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:95%"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-meta"><span>LLMs / RAG</span><span>90%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:90%"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-meta"><span>SQL / Data Engineering</span><span>85%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-meta"><span>Azure Cloud (AKS, Event Hubs)</span><span>80%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-meta"><span>PyTorch / Deep Learning</span><span>78%</span></div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:78%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">// 02 — experience</div>
+  <h2 class="section-title"><span class="teal-bar"></span>Where I've worked</h2>
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-date">May 2026<br />Present</div>
+      <div>
+        <div class="timeline-role">Software Engineer</div>
+        <div class="timeline-company">Tarka Labs · Bengaluru</div>
+        <div class="timeline-desc">
+          Building production-grade AI features and backend systems. Working across LLM integrations,
+          API design, and cloud infrastructure to ship AI products that work reliably at scale.
+        </div>
+        <div class="timeline-tags">
+          <span class="tag">Python</span>
+          <span class="tag">LLMs</span>
+          <span class="tag">Azure</span>
+          <span class="tag">REST APIs</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">Aug 2025<br />Apr 2026</div>
+      <div>
+        <div class="timeline-role">AI / ML Engineer</div>
+        <div class="timeline-company">Bosch Global Software Technologies · Hyderabad</div>
+        <div class="timeline-desc">
+          Built and deployed NLP-powered internal tools and RAG systems serving cross-functional
+          engineering teams. Designed LLM-backed pipelines on Azure infrastructure and created
+          Streamlit-based interfaces for model-driven analytics.
+        </div>
+        <div class="timeline-tags">
+          <span class="tag">RAG</span>
+          <span class="tag">LLMs</span>
+          <span class="tag">NLP</span>
+          <span class="tag">Azure</span>
+          <span class="tag">Streamlit</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">Feb 2024<br />Jul 2024</div>
+      <div>
+        <div class="timeline-role">Machine Learning Intern</div>
+        <div class="timeline-company">Bosch · Bengaluru</div>
+        <div class="timeline-desc">
+          Worked on NLP and predictive modelling prototypes. Contributed to model evaluation
+          pipelines and data preprocessing workflows using PyTorch and scikit-learn.
+        </div>
+        <div class="timeline-tags">
+          <span class="tag">PyTorch</span>
+          <span class="tag">NLP</span>
+          <span class="tag">Python</span>
+          <span class="tag">scikit-learn</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">// 03 — projects</div>
+  <h2 class="section-title"><span class="teal-bar"></span>Things I've built</h2>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-number">project_01</div>
+      <div class="project-title">BERT-Based Intent Classifier</div>
+      <div class="project-desc">
+        Fine-tuned a BERT model for multi-class intent classification on domain-specific
+        enterprise text. Achieved significant accuracy gains over baseline TF-IDF approaches,
+        with a FastAPI inference layer for production serving.
+      </div>
+      <div class="project-stack">
+        <span class="stack-pill">BERT</span>
+        <span class="stack-pill">HuggingFace</span>
+        <span class="stack-pill">PyTorch</span>
+        <span class="stack-pill">FastAPI</span>
+        <span class="stack-pill">Python</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-number">project_02</div>
+      <div class="project-title">RAG Pipeline — Internal Knowledge Base</div>
+      <div class="project-desc">
+        Production RAG system for querying internal engineering documentation. Built retrieval,
+        chunking, and re-ranking layers on top of Azure infrastructure with a Streamlit interface.
+      </div>
+      <div class="project-stack">
+        <span class="stack-pill">Python</span>
+        <span class="stack-pill">LangChain</span>
+        <span class="stack-pill">Azure</span>
+        <span class="stack-pill">Streamlit</span>
+        <span class="stack-pill">FAISS</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-number">project_03</div>
+      <div class="project-title">Sentence Similarity Engine</div>
+      <div class="project-desc">
+        Built a semantic search and deduplication engine using Sentence-BERT embeddings.
+        Used for clustering support tickets and surfacing duplicate issues across large
+        unstructured text corpora at scale.
+      </div>
+      <div class="project-stack">
+        <span class="stack-pill">Sentence-BERT</span>
+        <span class="stack-pill">FAISS</span>
+        <span class="stack-pill">PyTorch</span>
+        <span class="stack-pill">Python</span>
+        <span class="stack-pill">scikit-learn</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-number">project_04</div>
+      <div class="project-title">NLP Analytics Dashboard</div>
+      <div class="project-desc">
+        Interactive Streamlit dashboard surfacing NLP-derived insights — sentiment trends,
+        topic clusters, and anomaly signals — from unstructured data sources at Bosch.
+      </div>
+      <div class="project-stack">
+        <span class="stack-pill">Streamlit</span>
+        <span class="stack-pill">PyTorch</span>
+        <span class="stack-pill">NLP</span>
+        <span class="stack-pill">HuggingFace</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">// 04 — contact</div>
+  <h2 class="section-title"><span class="teal-bar"></span>Let's talk</h2>
+  <p class="contact-sub">
+    Open to interesting AI/ML engineering roles, freelance projects, or just a good conversation
+    about building things that actually work.
+  </p>
+  <div class="contact-links">
+    <a href="mailto:knnishaanth@gmail.com" class="contact-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <rect x="2" y="4" width="20" height="16" rx="2"/>
+        <path d="M2 7l10 7 10-7"/>
+      </svg>
+      knnishaanth@gmail.com
+    </a>
+    <a href="https://github.com/Nishaanth419" target="_blank" class="contact-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/>
+      </svg>
+      Nishaanth419
+    </a>
+    <a href="https://www.linkedin.com/in/nishaanth-k-n-a59a38232/" target="_blank" class="contact-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/>
+        <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+      </svg>
+      nishaanth-k-n
+    </a>
+  </div>
+</section>
+
+<footer>
+  built with intention · nishaanth k n · 2026
+</footer>
+
+<script>
+  // Typewriter effect
+  const phrases = [
+    'I build AI that ships.',
+    'RAG · LLMs · Real-time pipelines.',
+    'Production, not just notebooks.',
+  ];
+  const el = document.getElementById('typed-text');
+  let pIdx = 0, cIdx = 0, deleting = false;
+
+  function type() {
+    const phrase = phrases[pIdx];
+    const cursor = '<span class="cursor"></span>';
+    if (!deleting) {
+      cIdx++;
+      el.innerHTML = phrase.slice(0, cIdx) + cursor;
+      if (cIdx === phrase.length) {
+        setTimeout(() => { deleting = true; type(); }, 2200);
+        return;
+      }
+    } else {
+      cIdx--;
+      el.innerHTML = phrase.slice(0, cIdx) + cursor;
+      if (cIdx === 0) {
+        deleting = false;
+        pIdx = (pIdx + 1) % phrases.length;
+      }
+    }
+    setTimeout(type, deleting ? 38 : 72);
+  }
+  type();
+
+  // Intersection observer for skill bars
+  const bars = document.querySelectorAll('.skill-bar-fill');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.animation = 'grow 1.2s ease forwards';
+      }
+    });
+  }, { threshold: 0.3 });
+  bars.forEach(b => obs.observe(b));
+</script>
+</body>
+</html>
