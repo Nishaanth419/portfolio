@@ -1,0 +1,62 @@
+---
+import { profile } from '../data/site';
+
+const links = [
+  { label: 'Email', value: profile.email, href: `mailto:${profile.email}` },
+  { label: 'GitHub', value: profile.githubUser, href: profile.github, external: true },
+  { label: 'LinkedIn', value: profile.linkedinUser, href: profile.linkedin, external: true },
+];
+---
+<section id="contact" class="section contact">
+  <!-- Layout: oversized headline on the left, stacked link list on the right -->
+  <div class="left">
+    <p class="label caps bracket reveal">Contact</p>
+    <h2 class="reveal">Let's build<br />something that <span class="grad-text">thinks</span></h2>
+    <p class="note reveal">Open to AI/ML engineering roles, freelance projects, or a good conversation about building things that actually work.</p>
+    <div class="cta reveal">
+      <a class="btn-solid" href={`mailto:${profile.email}?subject=Hello%20Nishaanth`}>Send Request</a>
+      <a class="btn-icon" href="#home" aria-label="Back to top"><svg class="asterisk"><use href="#ast" /></svg></a>
+    </div>
+  </div>
+
+  <ul class="links">
+    {links.map((l, i) => (
+      <li class="reveal">
+        <a href={l.href} target={l.external ? '_blank' : undefined} rel={l.external ? 'noopener' : undefined}>
+          <span class="i">{String(i + 1).padStart(2, '0')}</span>
+          <span class="text"><span class="caps">{l.label}</span><span class="value">{l.value}</span></span>
+          <span class="arrow" aria-hidden="true">↗</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .contact {
+    display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(2rem, 6vw, 6rem); align-items: end;
+    min-height: 90svh; padding-bottom: clamp(3rem, 8vh, 5rem);
+  }
+  .label { color: var(--gray); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-size: clamp(3rem, 8vw, 8rem); font-weight: 300; line-height: 0.96; letter-spacing: -0.035em; }
+  .note { margin: 2.2rem 0; max-width: 30em; color: var(--gray); font-size: 1.05rem; }
+
+  .links { list-style: none; border-top: 1px solid var(--line-hi); }
+  .links li { border-bottom: 1px solid var(--line); }
+  .links a {
+    display: grid; grid-template-columns: 2.5rem 1fr auto; align-items: center; gap: 1rem;
+    padding: 1.6rem 0; text-decoration: none; transition: padding 0.4s var(--ease);
+  }
+  .links a:hover { padding-left: 0.8rem; }
+  .i { color: var(--gray2); font-size: 0.85rem; }
+  .text { display: flex; flex-direction: column; gap: 0.2rem; min-width: 0; }
+  .text .caps { font-size: 0.78rem; color: var(--gray); }
+  .value { font-size: clamp(1.2rem, 2vw, 1.7rem); overflow-wrap: anywhere; transition: color 0.25s; }
+  .links a:hover .value { color: var(--green); }
+  .arrow { font-size: 1.4rem; color: var(--gray2); transition: transform 0.35s var(--ease), color 0.35s; }
+  .links a:hover .arrow { transform: translate(4px, -4px); color: var(--white); }
+
+  @media (max-width: 900px) {
+    .contact { grid-template-columns: 1fr; min-height: 0; }
+  }
+</style>

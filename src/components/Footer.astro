@@ -1,0 +1,18 @@
+---
+import { profile } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+<footer class="footer caps">
+  <span class="bracket">{profile.name}</span>
+  <span>Built with Astro &amp; Three.js</span>
+  <span>© {year}</span>
+</footer>
+
+<style>
+  .footer {
+    display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    padding: 1.6rem var(--gutter); font-size: 0.8rem; color: var(--gray2);
+    border-top: 1px solid var(--line);
+  }
+</style>
