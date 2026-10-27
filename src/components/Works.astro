@@ -1,0 +1,188 @@
+---
+import { categories, langColors, profile, projects, repoUrl, type Category } from '../data/site';
+
+const featured = projects.filter((p) => p.featured);
+const rest = projects.filter((p) => !p.featured);
+const filterKeys = ['all', ...new Set(rest.map((p) => p.category))] as ('all' | Category)[];
+const countFor = (k: 'all' | Category) => (k === 'all' ? rest.length : rest.filter((p) => p.category === k).length);
+const title = (p: (typeof projects)[number]) => p.title ?? p.repo;
+---
+<section id="works" class="section">
+  <div class="section-head reveal">
+    <h2>Things I've built</h2>
+    <span class="label caps bracket">Selected works</span>
+  </div>
+
+  <!-- Layout 1: asymmetric bento for featured projects -->
+  <div class="bento">
+    {featured.map((p, i) => (
+      <a class={`feat f${i} reveal`} href={repoUrl(p)} target="_blank" rel="noopener" data-glow>
+        <span class="orb" aria-hidden="true"></span>
+        <div class="top caps">
+          <span>{String(i + 1).padStart(2, '0')} · <span class="bracket">{categories[p.category]}</span></span>
+          <span class="arrow" aria-hidden="true">↗</span>
+        </div>
+        <div class="main">
+          <h3>{title(p)}</h3>
+          <p>{p.description}</p>
+        </div>
+        <div class="foot">
+          <ul class="stack caps">{p.stack.map((s) => <li>{s}</li>)}</ul>
+          <span class="lang" style={`--c:${langColors[p.lang] ?? '#A3A8B3'}`}><i></i>{p.lang}</span>
+        </div>
+      </a>
+    ))}
+  </div>
+
+  <!-- Layout 2: filterable index list for everything else -->
+  <div class="index-head reveal">
+    <h3 class="caps">Archive <sup>{rest.length}</sup></h3>
+    <div class="filters" role="group" aria-label="Filter archive">
+      {filterKeys.map((k) => (
+        <button type="button" class="caps" data-filter={k} aria-pressed={k === 'all' ? 'true' : 'false'}>
+          {k === 'all' ? 'All' : categories[k]}<sup>{countFor(k)}</sup>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <ol class="index">
+    {rest.map((p, i) => (
+      <li class="row reveal" data-cat={p.category}>
+        <a href={repoUrl(p)} target="_blank" rel="noopener">
+          <span class="n">{String(featured.length + i + 1).padStart(2, '0')}</span>
+          <span class="name">{title(p)}</span>
+          <span class="cat caps">{categories[p.category]}</span>
+          <span class="tech caps">{p.stack.join(' · ')}</span>
+          <span class="lang" style={`--c:${langColors[p.lang] ?? '#A3A8B3'}`}><i></i>{p.lang}</span>
+          <span class="arrow" aria-hidden="true">↗</span>
+          <span class="desc"><span>{p.description}</span></span>
+        </a>
+      </li>
+    ))}
+  </ol>
+
+  <div class="more">
+    <a class="btn-ghost" href={`${profile.github}?tab=repositories`} target="_blank" rel="noopener">All repositories on GitHub</a>
+  </div>
+</section>
+
+<style>
+  /* ── bento ── */
+  .bento {
+    display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: minmax(250px, auto);
+    gap: 0.8rem;
+  }
+  .feat {
+    --mx: 50%; --my: 50%;
+    position: relative; overflow: hidden; isolation: isolate;
+    display: flex; flex-direction: column; justify-content: space-between; gap: 1.6rem;
+    padding: 1.6rem; border: 1px solid var(--line); background: var(--surface);
+    text-decoration: none; transition: border-color 0.4s;
+  }
+  .feat:hover { border-color: var(--line-hi); }
+  .feat::before {
+    content: ''; position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity 0.4s;
+    background:
+      radial-gradient(380px circle at var(--mx) var(--my), rgba(62, 240, 168, 0.14), transparent 45%),
+      radial-gradient(520px circle at var(--mx) var(--my), rgba(180, 92, 255, 0.12), transparent 60%);
+  }
+  .feat:hover::before { opacity: 1; }
+  .f0 { grid-column: span 2; grid-row: span 2; }
+  .f1 { grid-column: span 2; }
+  .orb {
+    position: absolute; z-index: -2; border-radius: 50%; filter: blur(50px); opacity: 0.5;
+    width: 60%; aspect-ratio: 1; right: -15%; bottom: -25%;
+    background: conic-gradient(from 180deg, var(--green), var(--blue), var(--violet), var(--green));
+    animation: orbit 16s linear infinite;
+  }
+  .f1 .orb, .f2 .orb, .f3 .orb { opacity: 0.22; width: 50%; }
+  @keyframes orbit { to { transform: rotate(360deg); } }
+
+  .top { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--gray); }
+  .arrow { font-size: 1.2rem; color: var(--gray2); transition: transform 0.35s var(--ease), color 0.35s; }
+  a:hover .arrow { transform: translate(3px, -3px); color: var(--white); }
+  .feat h3 { font-size: clamp(1.5rem, 2.2vw, 2rem); font-weight: 300; line-height: 1.05; letter-spacing: -0.015em; }
+  .f0 h3 { font-size: clamp(2.6rem, 5.5vw, 5.4rem); letter-spacing: -0.035em; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .feat p { margin-top: 0.9rem; color: var(--gray); font-size: 0.95rem; line-height: 1.55; max-width: 34em; }
+  .f0 p { font-size: clamp(1rem, 1.3vw, 1.2rem); color: rgba(242, 244, 247, 0.82); }
+  .foot { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+  .stack { display: flex; flex-wrap: wrap; gap: 0.2rem 0.9rem; list-style: none; font-size: 0.75rem; color: var(--gray); }
+  .lang { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 0.8rem; color: var(--gray); white-space: nowrap; }
+  .lang i { width: 7px; height: 7px; border-radius: 50%; background: var(--c); box-shadow: 0 0 8px var(--c); }
+
+  /* ── index list ── */
+  .index-head {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 1rem 2rem; flex-wrap: wrap;
+    margin-top: clamp(4rem, 10vh, 6rem); padding-bottom: 1rem; border-bottom: 1px solid var(--line-hi);
+  }
+  .index-head h3 { font-size: 0.95rem; color: var(--gray); }
+  sup { font-size: 0.65em; margin-left: 0.2em; color: var(--gray2); }
+  .filters { display: flex; flex-wrap: wrap; gap: 0.3rem 1.4rem; }
+  .filters button {
+    background: none; border: 0; cursor: pointer; padding: 0.2rem 0;
+    font: inherit; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.02em; font-weight: 400;
+    color: var(--gray2); transition: color 0.2s;
+  }
+  .filters button:hover { color: var(--gray); }
+  .filters button[aria-pressed='true'] { color: var(--white); }
+
+  .index { list-style: none; }
+  .row { border-bottom: 1px solid var(--line); }
+  .row.hide { display: none; }
+  .row a {
+    position: relative;
+    display: grid; grid-template-columns: 3rem minmax(0, 1.4fr) 7rem minmax(0, 1.2fr) 9rem 1.5rem;
+    grid-template-rows: auto 0fr; column-gap: 1.2rem; align-items: center;
+    padding: 1.3rem 0.4rem; text-decoration: none;
+    transition: grid-template-rows 0.45s var(--ease), background 0.3s, padding 0.3s;
+  }
+  .row a::before {
+    content: ''; position: absolute; left: 0; bottom: -1px; height: 1px; width: 0;
+    background: var(--grad); transition: width 0.7s var(--ease);
+  }
+  .row a:hover, .row a:focus-visible { grid-template-rows: auto 1fr; background: rgba(255, 255, 255, 0.025); padding-inline: 1rem; }
+  .row a:hover::before { width: 100%; }
+  .n { color: var(--gray2); font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+  .name { font-size: clamp(1.15rem, 1.8vw, 1.6rem); font-weight: 300; letter-spacing: -0.01em; }
+  .cat, .tech { font-size: 0.75rem; color: var(--gray); }
+  .tech { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row .arrow { justify-self: end; }
+  .desc { grid-column: 2 / -1; align-self: stretch; overflow: hidden; min-height: 0; }
+  .desc span { display: block; padding-top: 0.8rem; color: var(--gray); max-width: 46em; }
+
+  .more { display: flex; justify-content: flex-end; margin-top: 2rem; }
+
+  @media (max-width: 1000px) {
+    .bento { grid-template-columns: repeat(2, 1fr); }
+    .f0 { grid-row: span 1; }
+    .row a { grid-template-columns: 2.4rem minmax(0, 1fr) 8rem 1.5rem; }
+    .tech, .cat { display: none; }
+  }
+  @media (max-width: 640px) {
+    .bento { grid-template-columns: 1fr; }
+    .f0, .f1 { grid-column: auto; }
+    .row a { grid-template-columns: 2rem minmax(0, 1fr) 1.5rem; grid-template-rows: auto auto; }
+    .row .lang { display: none; }
+    .desc span { padding-top: 0.4rem; font-size: 0.9rem; }
+  }
+</style>
+
+<script>
+  // pointer-following glow on featured cards
+  document.querySelectorAll<HTMLElement>('[data-glow]').forEach((card) => {
+    card.addEventListener('pointermove', (e) => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      card.style.setProperty('--my', `${e.clientY - r.top}px`);
+    });
+  });
+
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const rows = document.querySelectorAll<HTMLElement>('.row[data-cat]');
+  buttons.forEach((btn) => btn.addEventListener('click', () => {
+    const f = btn.dataset.filter;
+    buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+    rows.forEach((row) => row.classList.toggle('hide', f !== 'all' && row.dataset.cat !== f));
+  }));
+</script>

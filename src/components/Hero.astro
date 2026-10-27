@@ -1,0 +1,69 @@
+---
+import { profile } from '../data/site';
+---
+<header id="home" class="hero">
+  <h1 class="title">
+    <span class="line"><span>AI that ships,</span></span>
+    <span class="line"><span>not just <em class="grad-text">demos</em></span></span>
+  </h1>
+
+  <div class="spacer"></div>
+
+  <div class="info">
+    <p class="lead caps">{profile.name} — AI engineer. LLM agents, RAG and real-time data — built to hold up outside the notebook.</p>
+    <p class="side">Software Engineer at Tarka Labs, Bengaluru. I build agents, retrieval pipelines and the infrastructure that keeps them honest.</p>
+  </div>
+
+  <div class="bottom">
+    <div class="tags caps">
+      <span class="bracket">AI Engineer</span><span class="dot"></span>
+      <span class="bracket">LLM Agents</span><span class="dot"></span>
+      <span class="bracket">RAG Systems</span>
+    </div>
+    <div class="cta">
+      <a class="btn-solid" href={`mailto:${profile.email}?subject=Hello%20Nishaanth`}>Send Request</a>
+      <a class="btn-icon" href="#works" aria-label="See my work"><svg class="asterisk"><use href="#ast" /></svg></a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .hero {
+    position: relative; min-height: 100svh;
+    display: flex; flex-direction: column;
+    padding: 0 var(--gutter) var(--gutter);
+  }
+  .title {
+    margin-top: clamp(7rem, 15vh, 11rem);
+    font-size: clamp(3rem, 7.4vw, 7.2rem);
+    font-weight: 300; line-height: 1.02; letter-spacing: -0.025em;
+  }
+  .line { display: block; overflow: hidden; padding-bottom: 0.08em; }
+  .line > span { display: inline-block; transform: translateY(110%); animation: rise 1.2s var(--ease) forwards; }
+  .line:nth-child(2) > span { animation-delay: 0.12s; }
+  em { font-style: normal; }
+  @keyframes rise { to { transform: none; } }
+
+  .spacer { flex: 1; min-height: 3rem; }
+  .info {
+    display: grid; grid-template-columns: 1fr auto; gap: 2rem;
+    padding-top: 2.6rem; border-top: 1px solid var(--line);
+    animation: fade 1.4s 0.5s both;
+  }
+  .lead { font-size: clamp(0.95rem, 1.25vw, 1.2rem); max-width: 30em; line-height: 1.3; }
+  .side { font-size: clamp(0.95rem, 1.2vw, 1.15rem); max-width: 22em; color: rgba(242, 244, 247, 0.88); line-height: 1.35; }
+  .bottom {
+    display: flex; justify-content: space-between; align-items: flex-end; gap: 1.5rem; flex-wrap: wrap;
+    margin-top: clamp(3rem, 10vh, 7rem);
+    animation: fade 1.4s 0.8s both;
+  }
+  .tags { display: flex; align-items: center; gap: 1.4rem; flex-wrap: wrap; font-size: clamp(0.9rem, 1.1vw, 1.12rem); }
+  .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--white); }
+  @keyframes fade { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+  @media (max-width: 900px) { .info { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) {
+    .bottom { flex-direction: column; align-items: stretch; }
+    .tags { gap: 0.8rem; font-size: 0.85rem; }
+  }
+</style>
