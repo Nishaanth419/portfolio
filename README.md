@@ -15,6 +15,7 @@ holding the pointer still makes it breathe more.
 | 3D / motion | [Three.js](https://threejs.org) + custom GLSL shaders | GPU-driven particle torus with simplex-noise displacement |
 | Styling | Scoped component CSS + global design tokens | No framework overhead; each section owns its layout |
 | Fonts | Inter Tight (Google Fonts) | Thin display weights for the large headlines |
+| Logos | [Simple Icons](https://simpleicons.org) | Tech-strip logos inlined as SVG at build time, so they add no client JavaScript |
 | Hosting | GitHub Pages via GitHub Actions | Builds on every push to `main`; custom domain from `public/CNAME` |
 
 Three.js (~520 kB) is loaded **lazily** after the text has painted, and the animation pauses

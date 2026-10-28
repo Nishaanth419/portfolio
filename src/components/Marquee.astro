@@ -1,5 +1,6 @@
 ---
 import { marquee } from '../data/site';
+import { techIcons } from '../data/techIcons';
 
 interface Props {
   items?: string[];
@@ -7,12 +8,32 @@ interface Props {
 }
 
 const { items = marquee, reverse = false } = Astro.props;
+
+// Near-black brand colours would vanish on the dark background, so those logos stay white on hover.
+const isDark = (hex: string) => {
+  const n = parseInt(hex.slice(1), 16);
+  return 0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255) < 60;
+};
+const hoverColor = (name: string) => {
+  const hex = techIcons[name]?.hex;
+  return hex && !isDark(hex) ? `--brand:${hex}` : undefined;
+};
 ---
 <div class:list={['marquee', { reverse }]} aria-label={items.join(', ')}>
   {[0, 1].map((copy) => (
     <ul class="track caps" aria-hidden={copy === 1 ? 'true' : undefined}>
       {items.map((item) => (
-        <li><span>{item}</span><svg class="asterisk" aria-hidden="true"><use href="#ast" /></svg></li>
+        <li style={hoverColor(item)}>
+          <span class="tech">
+            {techIcons[item] && (
+              <svg class:list={['logo', { stroke: techIcons[item].stroke }]} viewBox="0 0 24 24" aria-hidden="true">
+                <path d={techIcons[item].path} />
+              </svg>
+            )}
+            <span>{item}</span>
+          </span>
+          <svg class="asterisk" aria-hidden="true"><use href="#ast" /></svg>
+        </li>
       ))}
     </ul>
   ))}
@@ -36,7 +57,13 @@ const { items = marquee, reverse = false } = Astro.props;
     padding: 1.4rem 0 1.4rem clamp(1.2rem, 3vw, 2.6rem);
     font-size: clamp(1.4rem, 3.2vw, 2.8rem); font-weight: 300; white-space: nowrap;
   }
-  li:nth-child(3n + 2) span { color: var(--gray2); }
+  .tech { display: inline-flex; align-items: center; gap: 0.38em; transition: color 0.3s; }
+  li:nth-child(3n + 2) .tech { color: var(--gray2); }
+  li:hover .tech { color: var(--white); }
+  .logo { width: 0.82em; height: 0.82em; flex-shrink: 0; fill: currentColor; transition: fill 0.3s, stroke 0.3s; }
+  .logo.stroke { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  li:hover .logo { fill: var(--brand, currentColor); }
+  li:hover .logo.stroke { fill: none; stroke: var(--brand, currentColor); }
   .asterisk { width: 0.55em; height: 0.55em; color: var(--green); opacity: 0.8; }
   li:nth-child(even) .asterisk { color: var(--violet); }
   @keyframes scroll { to { transform: translateX(-100%); } }
