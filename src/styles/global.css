@@ -76,7 +76,7 @@ a:focus-visible, button:focus-visible { outline: 1px solid var(--green); outline
 .cta:hover .btn-icon .asterisk { transform: rotate(180deg); }
 .cta:hover .btn-solid { background: #fff; }
 
-/* scroll reveal — toggled by the observer in BaseLayout */
+/* scroll reveal, toggled by the observer in BaseLayout */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
 .reveal.in-view { opacity: 1; transform: none; }
 .no-js .reveal { opacity: 1; transform: none; }

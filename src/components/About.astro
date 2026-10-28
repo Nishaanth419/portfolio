@@ -2,7 +2,7 @@
 import { profile, projects, skills } from '../data/site';
 
 const stats = [
-  { value: projects.length, label: 'Public projects' },
+  { value: projects.length, label: 'Projects shipped' },
   { value: projects.filter((p) => p.category === 'agents').length, label: 'AI agents built' },
   { value: projects.filter((p) => p.category === 'rag').length, label: 'RAG systems' },
 ];
@@ -19,20 +19,20 @@ const stats = [
       <div><dt class="caps">Based in</dt><dd>{profile.location}</dd></div>
       <div><dt class="caps">Now</dt><dd>Software Engineer, Tarka Labs</dd></div>
       <div><dt class="caps">Studied</dt><dd>B.Tech CSE, Amrita Vishwa Vidyapeetham</dd></div>
-      <div><dt class="caps">Local time</dt><dd data-clock>—</dd></div>
+      <div><dt class="caps">Local time</dt><dd data-clock>IST</dd></div>
     </dl>
   </aside>
 
   <div class="story">
     <p class="statement reveal">
-      I build AI systems that <span class="grad-text">reason in production</span> — not just in notebooks.
-      My work sits where <span class="grad-text">LLMs, real-time data and cloud infrastructure</span> meet,
-      <span class="dim">and I care about the edge cases as much as the happy path.</span>
+      I turn language models into <span class="grad-text">dependable software</span>.
+      Agents that pick the right tool, retrieval that cites its sources,
+      <span class="dim">and pipelines that stay up when real users arrive.</span>
     </p>
     <p class="body reveal">
-      Before Tarka Labs I was at Bosch — first as an ML intern, then shipping RAG systems and
-      NLP tools on Azure for engineering teams. Outside work: solo travel (Singapore, Vietnam), long-form
-      writing, and the gym six days a week.
+      Today I build AI features and backend systems at Tarka Labs in Chennai. Before that I spent
+      time at Bosch, first as a machine learning intern and later shipping RAG systems and NLP tools on
+      Azure. Away from the keyboard I travel solo, write long form, and train six days a week.
     </p>
 
     <ul class="stats reveal">

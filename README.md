@@ -1,4 +1,4 @@
-# Nishaanth K N — Portfolio
+# Nishaanth K N · Portfolio
 
 Personal portfolio of **Nishaanth K N**, AI Engineer, live at **[k2n.online](https://k2n.online)**.
 
@@ -28,9 +28,9 @@ Each section uses a different layout:
 | --- | --- |
 | **Hero** | Full-height grid: oversized headline, divided info row, bracketed tags and CTA |
 | **Marquee** | Endless strip of the tools I use, pausing on hover |
-| **About** | Split: a sticky profile card (with a live Bengaluru clock) beside the story, animated stat counters and a skills bento grid |
+| **About** | Split: a sticky profile card (with a live Chennai clock) beside the story, animated stat counters and a skills bento grid |
 | **Experience** | Vertical timeline whose gradient line fills, and dots light up, as you scroll |
-| **Works** | Two parts: an uneven bento grid of featured projects with a glow that follows the pointer, then a filterable archive list where each row opens on hover to show its description |
+| **Works** | Uneven bento grid of my agent and RAG projects (one large tile, one wide tile, then singles), with a glow that follows the pointer |
 | **Contact** | Oversized headline on the left, numbered list of links on the right |
 
 ## Project structure
@@ -51,7 +51,7 @@ Each section uses a different layout:
 │   │   ├── Works.astro
 │   │   ├── Contact.astro
 │   │   └── Footer.astro
-│   ├── data/site.ts                # profile, projects, experience, skills — edit content here
+│   ├── data/site.ts                # profile, projects, experience, skills: edit content here
 │   ├── layouts/BaseLayout.astro    # <head>, SEO/meta tags, scroll-reveal observer
 │   ├── pages/index.astro           # puts the sections together
 │   ├── scripts/
@@ -77,9 +77,9 @@ npm run preview    # serve the production build locally
 All content lives in [`src/data/site.ts`](src/data/site.ts):
 
 - **Add a project:** add an entry to `projects`. `repo` must match the GitHub repository name
-  (it builds the link). Set `featured: true` to put it in the bento grid; the first featured
-  project gets the large tile.
-- **Categories** (`agents`, `rag`, `llm`, `data`, `web`) drive the archive filters, and counts update automatically.
+  (it builds the link). Projects appear in the bento grid in array order: the first gets the
+  large tile and the second the wide one.
+- **Categories** are `agents` and `rag`. They label each tile and feed the counters in About.
 - **Experience, skills, marquee items and contact links** are defined in the same file.
 
 ## Deployment

@@ -2,16 +2,17 @@
 import { profile } from '../data/site';
 ---
 <header id="home" class="hero">
+  <p class="eyebrow caps"><span class="bracket">{profile.role}</span><span class="dot"></span>{profile.location}</p>
   <h1 class="title">
-    <span class="line"><span>AI that ships,</span></span>
-    <span class="line"><span>not just <em class="grad-text">demos</em></span></span>
+    <span class="line"><span>Nishaanth</span></span>
+    <span class="line"><span class="grad-text">K N</span></span>
   </h1>
 
   <div class="spacer"></div>
 
   <div class="info">
-    <p class="lead caps">{profile.name} — AI engineer. LLM agents, RAG and real-time data — built to hold up outside the notebook.</p>
-    <p class="side">Software Engineer at Tarka Labs, Bengaluru. I build agents, retrieval pipelines and the infrastructure that keeps them honest.</p>
+    <p class="lead caps">I design LLM agents and RAG systems that keep working long after the demo.</p>
+    <p class="side">Software Engineer at Tarka Labs. Before that, I built AI tools for engineering teams at Bosch.</p>
   </div>
 
   <div class="bottom">
@@ -33,15 +34,20 @@ import { profile } from '../data/site';
     display: flex; flex-direction: column;
     padding: 0 var(--gutter) var(--gutter);
   }
+  .eyebrow {
+    display: flex; align-items: center; gap: 1rem;
+    margin-top: clamp(6.5rem, 14vh, 10rem);
+    font-size: clamp(0.85rem, 1vw, 1rem); color: var(--gray);
+    animation: fade 1.2s 0.3s both;
+  }
   .title {
-    margin-top: clamp(7rem, 15vh, 11rem);
-    font-size: clamp(3rem, 7.4vw, 7.2rem);
-    font-weight: 300; line-height: 1.02; letter-spacing: -0.025em;
+    margin-top: 1.2rem;
+    font-size: clamp(4rem, 12.5vw, 13rem);
+    font-weight: 300; line-height: 0.92; letter-spacing: -0.045em;
   }
   .line { display: block; overflow: hidden; padding-bottom: 0.08em; }
   .line > span { display: inline-block; transform: translateY(110%); animation: rise 1.2s var(--ease) forwards; }
   .line:nth-child(2) > span { animation-delay: 0.12s; }
-  em { font-style: normal; }
   @keyframes rise { to { transform: none; } }
 
   .spacer { flex: 1; min-height: 3rem; }

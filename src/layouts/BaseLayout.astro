@@ -8,8 +8,8 @@ interface Props {
 }
 
 const {
-  title = `${profile.name} — ${profile.role}`,
-  description = `${profile.name} — AI Engineer building LLM agents, RAG systems and real-time data pipelines.`,
+  title = `${profile.name} · ${profile.role}`,
+  description = `${profile.name} is an AI engineer in Chennai building LLM agents and RAG systems.`,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
