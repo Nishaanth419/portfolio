@@ -89,11 +89,11 @@ export const experience: Role[] = [
 export const skills: { group: string; items: string[] }[] = [
   { group: 'AI / LLM', items: ['LLM agents & tool use', 'RAG · Qdrant · FAISS', 'LangGraph · Ollama · Groq', 'MCP servers'] },
   { group: 'Machine learning', items: ['Python · PyTorch', 'HuggingFace · BERT', 'scikit-learn', 'NLP pipelines'] },
-  { group: 'Data', items: ['SQL · PostgreSQL', 'Kafka · RisingWave', 'Delta Lake', 'Pandas · Jupyter'] },
+  { group: 'Data', items: ['SQL · PostgreSQL', 'Delta Lake', 'Pandas · Jupyter'] },
   { group: 'Platform', items: ['Azure · AKS · Event Hubs', 'FastAPI · REST · SSE', 'Docker · Cloudflare Workers', 'React · TypeScript'] },
 ];
 
 export const marquee = [
   'Python', 'LLM Agents', 'RAG', 'LangGraph', 'MCP', 'Qdrant', 'FastAPI', 'PyTorch',
-  'Azure', 'Kafka', 'RisingWave', 'Ollama', 'Groq', 'TypeScript', 'React', 'Docker',
+  'Azure', 'Ollama', 'Groq', 'TypeScript', 'React', 'Docker',
 ];
